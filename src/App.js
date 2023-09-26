@@ -8,7 +8,7 @@ import { getCookie } from "./Utils/HandleCookie"
 
 
 function App() {
-  // const userStr = localStorage.getItem("user");
+  
   const userStr = getCookie("user");
   const userObj = userStr ? JSON.parse(userStr) : null;
   const [user, setUser] = useState(userObj);
@@ -22,9 +22,6 @@ function App() {
     subscribedStocks,
     setSubscribedStocks
   }
-
-  useEffect(() => {
-  }, []);
 
   return (
     <Router>

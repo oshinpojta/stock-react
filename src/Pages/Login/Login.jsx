@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import "./Login.css"
 import Context from '../../Utils/Context'
 import axios from 'axios';
@@ -16,7 +16,6 @@ const Login = () => {
     const loginUser = () => {
         axios.get(`${serverURL}/users/login`).then((response) => {
             if(response && response.data && response.data.success === true){
-                console.log(response.data)
                 let data = response.data.data;
                 let user = data.user;
                 let stocks = data.stocks;
@@ -28,6 +27,27 @@ const Login = () => {
             console.log(err);
         })
     }
+
+    const getGoogleUser = async () => {
+        try {
+          const url = `${process.env.REACT_APP_SERVER_URL2}/auth/login/success`
+          let response = await axios.get(url, { withCredentials : true });
+          if(response && response.data && response.data.success === true){
+            let data = response.data;
+            let user = data.user;
+            let stocks = data.stocks;
+            setStocks(stocks);
+            setUser(user);
+            setCookie("user", JSON.stringify(user), 1);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    
+      useEffect(() => {
+        // getGoogleUser()
+      }, []);
 
   return (
     <div className='container'>
