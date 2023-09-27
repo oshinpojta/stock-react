@@ -111,6 +111,12 @@ body {
 }
 
 @media (max-width : 700px) {
+
+  .div_container{
+    grid-template-columns: auto 60%;
+    padding-right: 1rem;
+  }
+
   .google_btn{
     width: 12rem;
     height: 2.5rem;
