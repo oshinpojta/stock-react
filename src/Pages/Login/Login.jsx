@@ -1,66 +1,40 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import "./Login.css"
-import Context from '../../Utils/Context'
-import axios from 'axios';
-import { setCookie } from "../../Utils/HandleCookie"
+import { motion } from 'framer-motion';
 
-const serverURL = process.env.REACT_APP_SERVER_URL2;
+const googelAuthUrl = "https://accounts.google.com/o/oauth2/v2/auth"; 
 
 const Login = () => {
 
-    const state = useContext(Context);
-    const { setUser, setStocks } = state;
-    const googleAuth = () => {
-        window.open(`${serverURL}/auth/google/callback`, "_self");
-    }
-    const loginUser = () => {
-        axios.get(`${serverURL}/users/login`).then((response) => {
-            if(response && response.data && response.data.success === true){
-                let data = response.data.data;
-                let user = data.user;
-                let stocks = data.stocks;
-                setStocks(stocks);
-                setUser(user);
-                setCookie("user", JSON.stringify(user), 1);
-            }
-        }).catch(err => {
-            console.log(err);
-        })
-    }
+    const getGoogleAuthUrl = () => {
 
-    const getGoogleUser = async () => {
-        try {
-          const url = `${process.env.REACT_APP_SERVER_URL2}/auth/login/success`
-          let response = await axios.get(url, { withCredentials : true });
-          if(response && response.data && response.data.success === true){
-            let data = response.data;
-            let user = data.user;
-            let stocks = data.stocks;
-            setStocks(stocks);
-            setUser(user);
-            setCookie("user", JSON.stringify(user), 1);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+      const options = {
+        redirect_uri : process.env.REACT_APP_GOOGLE_REDIRECT_URI,
+        client_id : process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        access_type : "offline",
+        response_type : "code",
+        prompt : "consent",
+        scope : [
+          "https://www.googleapis.com/auth/userinfo.profile",
+          "https://www.googleapis.com/auth/userinfo.email"
+        ].join(" ")
       }
-    
-      useEffect(() => {
-        // getGoogleUser()
-      }, []);
+
+      const qs = new URLSearchParams(options);
+      return `${googelAuthUrl}?${qs.toString()}`
+
+    }
 
   return (
     <div className='container'>
-        <h1 className='heading'>User LogIn</h1>
         <div className='form_container'>
             <div className='right'>
-                <button className='google_btn' onClick={googleAuth}>
-                    <img src='https://logowik.com/content/uploads/images/985_google_g_icon.jpg' alt='google icon' />
-                    <span> Sign-In with Google</span>
-                </button>
-                <button onClick={loginUser}>
-                    Login
-                </button>
+              <a href={getGoogleAuthUrl()} style={{ textDecoration:"none"}}>
+                <button className='google_btn'  style={{ fontSize:"1.2rem" }}>
+                      <img src='https://logowik.com/content/uploads/images/985_google_g_icon.jpg' alt='google icon' />
+                      <span> Sign-In with Google</span>
+                  </button>
+              </a>
             </div>
         </div>
     </div>
