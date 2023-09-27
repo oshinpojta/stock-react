@@ -12,8 +12,7 @@ body{
   width: 100vw;
   height: 100vh;
   background-color: aliceblue;
-  display: flex;
-  flex-direction: column;
+  display: block;
   justify-content: center;
   align-items: center;
 }

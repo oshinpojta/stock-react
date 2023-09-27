@@ -40,26 +40,45 @@ body {
     -webkit-font-smoothing: antialiased;
   }
 
-.container{
-    display: block;
+.div_container{
+    display: grid;
+    grid-template-columns: auto auto;
     align-items: center;
     justify-content: center;
-    /* background-color: #181818; */
-    background-image: url();
+    background-color: #272727;
+    /* background-image: url("https://cdn.pixabay.com/photo/2017/08/30/01/05/milky-way-2695569_1280.jpg"); */
     background-repeat: no-repeat;
     background-size: cover;
 }
 
+.image_container {
+  display: block;
+  background-color: #0f1011;
+  background-image:  url("https://images.unsplash.com/photo-1593672715438-d88a70629abe?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1287&q=80");
+  opacity: 0.7;
+  width: 50vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+}
 
 .form_container {
-    display: flex;
-    width: 100vw;
+    display: grid;
+    grid-template-rows: 0% 50%;
+    width: 50vw;
     height: 10%;
+    background-color: #2c444e;
     margin: 25% auto;
     align-items: center;
     justify-content: center;
     background: none;
 }
+
+ .form_container h1 {
+    color: #0f1011;
+    display: block;
+    margin-bottom: 5rem;
+ }
 
 
 .google_btn {
@@ -89,4 +108,22 @@ body {
 
 .google_btn > span{
     margin-left: 1rem;
+}
+
+@media (max-width : 700px) {
+  .google_btn{
+    width: 10rem;
+    height: 2.5rem;
+  }
+
+  .google_btn > img{
+    width: 2rem;
+    height: 2rem;
+}
+
+.google_btn > span{
+  margin-left: 0.5rem;
+  font-size: 0.7rem;
+}
+
 }

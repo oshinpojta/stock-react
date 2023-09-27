@@ -26,8 +26,11 @@ const Login = () => {
     }
 
   return (
-    <div className='container'>
+    <div className='div_container'>
+
+      <div className='image_container' ></div>
         <div className='form_container'>
+          
             <div className='right'>
               <a href={getGoogleAuthUrl()} style={{ textDecoration:"none"}}>
                 <button className='google_btn'  style={{ fontSize:"1.2rem" }}>
