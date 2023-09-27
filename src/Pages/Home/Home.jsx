@@ -28,10 +28,11 @@ const Home = () => {
     const { user, setUser, 
         stocks, setStocks, logout,stockSubscribeData, 
         setStockSubscribeData,
-        subscribeStock } = state;
+        subscribeStock, chartStock } = state;
 
     const [ toggle, setToggle ] = useState(false);
     
+    const h1Margin = window.innerWidth < 700 ? "56%" : "160%"; 
 
     useEffect(()=>{
         const options = {
@@ -152,13 +153,14 @@ const Home = () => {
     },[toggle, stocks])
     
   return (
-    <div className='container' style={{ height:"100vh", display:"inline-grid", gridTemplateColumns:"1fr 1fr", overflow:"scroll" }}>
+    <div className='container' style={{ height:"100vh", width:"100vw", display:"inline-grid", gridTemplateColumns:"20% 80%", overflow:"scroll", zIndex:"1" }}>
          <SideBar />
-        <div style={{ display:"grid", gridTemplateRows:"0% 60% 40%" }}>
-            <Dropdown />
-            <ChartBox  stocks={stocks} />
-            <Lists stocks={stocks}/>
-        </div>
+        { <div style={{ display:"grid", gridTemplateRows:"0% 35% 50%" }}>
+        { !chartStock && <h1 style={{ color:"black", marginLeft:h1Margin }}>Subscribe to a Stock !</h1> }
+            { chartStock && <Dropdown /> }
+            { chartStock && <ChartBox  stocks={stocks} /> }
+            { chartStock && <Lists stocks={stocks}/> }
+        </div> }
     </div>
   )
 }

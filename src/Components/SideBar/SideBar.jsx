@@ -7,13 +7,27 @@ import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDo
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
 
+
+const rootStyles={
+  height:"110vh",
+  backgroundColor:"#fafafa",
+  position:"fixed", 
+  top:"68px",
+  overflow:"scroll",
+  boxShadow:"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+  "@media screen and (max-width: 600px)" : {
+    width:"150px"
+  }
+}
 const arrowIconStyles = { color:"black", float:"right", margin:"10", width:"100%", cursor:"pointer" };
 const menuIconStyles = { fontSize:"1.6rem", marginLeft:"1.5rem" }
 const menuItemsStyles = { 
     display: 'flex',
     alignItems: 'center',
     flexWrap: 'wrap',
+    zIndex:"2",
     //boxShadow:"2px 3px lightblue inset" 
+    overflow:"scroll"
 } 
 
 
@@ -21,7 +35,7 @@ const menuItemsStyles = {
 const SideBar = () => {
 
     const state = useContext(Context);
-    const { stocks, subscribeStock, toggleBar, setToggleBar, setChartStock } = state;
+    const { stocks, subscribeStock, toggleBar, setToggleBar, setChartStock, setLogout } = state;
 
     const toggleBarState = () => {
         setToggleBar(!toggleBar);
@@ -34,19 +48,13 @@ const SideBar = () => {
     },[])
 
   return (
-    <Sidebar width='270px' collapsed={toggleBar} rootStyles={{
-        height:"110vh",
-        backgroundColor:"#fafafa",
-        boxShadow:"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-        "@media only screen and (max-width: 600px)" : {
-          width:"150px"
-        }
-      }} >
+    <Sidebar width='270px' collapsedWidth='60px' collapsed={toggleBar} rootStyles={rootStyles} >
         <button onClick={toggleBarState}>
             { toggleBar ? <KeyboardDoubleArrowRightOutlinedIcon style={arrowIconStyles}/> : <KeyboardDoubleArrowLeftOutlinedIcon style={arrowIconStyles}/> }
         </button>
 
     <Menu menuItemStyles={{
+      overflow:"scroll",
       button: {
         // the active class will be added automatically by react router
         // so we can use it to style the active menu item
@@ -67,8 +75,9 @@ const SideBar = () => {
             return <div key={stock.id} onClick={() => { setChartStock(stock.id) }}><MenuItem style={menuItemsStyles}  key={stock.id+"subStocks"}> {stock.name} <p style={{ display:"inline", marginLeft:"0.5rem", color: stock.orders.slice(-1)[0].value > stock.startPrice ? "green" : "red"}}>{stock.orders.slice(-1)[0].value > stock.startPrice ? "+" : "-"}{Math.round((stock.orders.slice(-1)[0].value/stock.startPrice)*1000)/1000}%</p></MenuItem></div>
         }) }
         </SubMenu>
-        <MenuItem> React Repo Github </MenuItem>
-        <MenuItem> Node Repo Github </MenuItem>
+        <a key={"node-repo"} href='https://github.com/oshinpojta/stock-react' target="_blank" rel='noreferrer' style={{ textDecoration:"none" }}><MenuItem> React-Repo Github </MenuItem></a>
+        <a key={"react-repo"} href='https://github.com/oshinpojta/stock-node' target="_blank" rel='noreferrer' style={{ textDecoration:"none" }}><MenuItem> Node-Repo Github </MenuItem></a>
+        <MenuItem style={{ backgroundColor:"red", color:"white", marginTop:"4rem" }} onClick={() => setLogout(true)}> Logout </MenuItem>
     </Menu>
     </Sidebar>
   )

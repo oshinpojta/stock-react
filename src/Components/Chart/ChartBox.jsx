@@ -28,7 +28,7 @@ const ChartBox = (props) => {
     const stocks = props.stocks;
     const state = useContext(Context);
 
-    const { chartStock, toggleBar, duration } = state;
+    const { chartStock, duration } = state;
     const chartDataObj = {
       labels : [],
       datasets : [
@@ -42,9 +42,9 @@ const ChartBox = (props) => {
       ]
     }
 
-    const [chartWidth, setChartWidth] = useState("62vw");
+    const chartWidth = window.innerWidth*0.79;
+    const chartHeight = window.innerHeight*0.35;
     const [chartData, setChartData] = useState(chartDataObj)
-   
 
     useEffect(()=>{
       if(chartStock){
@@ -52,7 +52,7 @@ const ChartBox = (props) => {
         if(selectedStocks && selectedStocks.length>0){
           let chartStock = selectedStocks[0];
           const Obj = {
-            labels : chartStock.orders.slice(-duration).map((order)=> order.id),
+            labels : chartStock.orders.slice(-duration).map((order)=> new Date(order.executed_at).toTimeString().split(" ")[0] == "Invalid" ? "" : new Date(order.executed_at).toTimeString().split(" ")[0] ),
             datasets : [
               {
                 label: chartStock.name+ " Price at Rs:"+ chartStock.orders.slice(-1)[0].value ,
@@ -67,27 +67,25 @@ const ChartBox = (props) => {
             ]
           }
           setChartData(Obj);
+
         }
       }
     },[stocks, chartStock, setChartData, duration])
 
-    useEffect(()=>{
-        if(toggleBar){
-            setChartWidth("80vw")
-        }else{
-            setChartWidth("62vw")
-        }
-    }, [toggleBar])
-
 
   return (
-    <div style={{ width:chartWidth, height:"45vh", margin:"3rem", marginRight:"3rem"}}>
-      { !chartStock && <h1 style={{ color:"white" }}>Tap on 1 Subscribed Stock !</h1> }
+    <div style={{ width:chartWidth, height:chartHeight, marginLeft:"24%", marginTop:"6rem"}}>
       { chartStock && <Line redraw={false} options={{
             type : "bar",
             responsive:true,
+            maintainAspectRatio: false,
             animation: false,
             redraw:false,
+            tension: 0.5,
+            pointRadius: [...new Array(stocks.filter((stock) => stock.id == chartStock)[0].orders.slice(-duration).length-1).fill(2).map((element, idx) => {
+              if(idx%(duration/120) == 0) return 2
+              else return 0
+            }), 8],
             plugins: {
               legend: {
                 position: 'top',
@@ -95,6 +93,27 @@ const ChartBox = (props) => {
               title: {
                 display: true,
                 text: 'Current Market Price',
+              },
+            },
+            scales: {
+              x: {
+                grid: {
+                  display: false,
+                },
+                title: {
+                  display: true,
+                  text: 'Executed At ( Time )'
+                }
+              },
+          
+              y: {
+                grid: {
+                  display: true,
+                },
+                title: {
+                  display: true,
+                  text: 'Price ( in Rs. )' 
+                }
               },
             },
         }} data={chartData} /> }

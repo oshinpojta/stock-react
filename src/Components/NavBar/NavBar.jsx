@@ -15,6 +15,7 @@ import AdbIcon from '@mui/icons-material/Adb';
 
 import Context from '../../Utils/Context';
 import Dropdown from '../../Components/Dropdown/Dropdown';
+import { Link } from '@mui/material';
 
 const settings = ['Profile'];
 
@@ -25,7 +26,7 @@ function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    
+    const titleFontSize = window.innerWidth*0.003 + "rem";
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -117,32 +118,40 @@ function NavBar() {
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.3rem',
+              letterSpacing: '.1rem',
               color: 'inherit',
               textDecoration: 'none',
+              fontSize: titleFontSize
             }}
           >
             StockBugger
           </Typography>
+          
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <a href='https://oshinpojta.netlify.app/static/media/OshinResume.4e7f72131b859a615023.pdf' target="_blank" rel='noreferrer' style={{ textDecoration:"none" }}>
             <Button
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                   About
+                   Resume
             </Button>
-            <Button
+            </a>
+            <a href='https://oshinpojta.netlify.app/' target="_blank" rel='noreferrer' style={{ textDecoration:"none" }} >
+              <Button
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                    Portfolio
-            </Button>
+              </Button>
+            </a>
+            <a href='https://www.linkedin.com/in/oshin-pojta/' target="_blank" rel='noreferrer' style={{ textDecoration:"none" }}>
             <Button
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
                    Contact
             </Button>
+            </a>
           </Box>
           { user && <h3 style={{ marginRight:"1rem" }}>{user.name}</h3>}
           <Box sx={{ flexGrow: 0 }}>

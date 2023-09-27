@@ -6,6 +6,7 @@ import Login from './Pages/Login/Login';
 import Home from './Pages/Home/Home';
 import { getCookie } from "./Utils/HandleCookie"
 import NavBar from './Components/NavBar/NavBar';
+import SideBar from './Components/SideBar/SideBar';
 
 function App() {
   
@@ -58,6 +59,7 @@ function App() {
       <Context.Provider value={state}>
        <div className="container">
           <NavBar />
+          {/* <SideBar /> */}
           <Routes>
             <Route exact path="/" element={ user ? <Home /> : <Navigate to="/login" />} />
             <Route exact path="/login" element={user ? <Navigate to="/" /> : <Login /> } />

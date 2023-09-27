@@ -4,6 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import Context from '../../Utils/Context';
 
 const Duration = [
     {
@@ -34,28 +35,38 @@ const Duration = [
   
 
 export default function Dropdown(props) {
-  const {duration, setDuration} = props;
+
+  const state = React.useContext(Context);
+  const {duration, setDuration, toggleBar} = state;
 
   const handleChange = (event) => {
     setDuration(event.target.value);
   };
 
   return (
-    <Box sx={{ minWidth: 100, maxWidth: 200, 
-        marginLeft:"3rem",
-        marginBottom:"10rem",
-        "@media only screen and (max-width: 600px)" : {
-            width:100,
-            fontSize:"1rem"
-    } }}>
+    <Box sx={{ 
+        minWidth: window.innerWidth*0.4, 
+        maxWidth: 300, 
+        // padding:"0",
+        height:"20px",
+        minHeight: "10",
+        maxHeight: "20", 
+        marginLeft:"40%",
+        marginTop:"2rem",
+        visibility: window.innerWidth>700 ? "visible" : !toggleBar ? "hidden" : "visible" }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label" >Set Chart Duration</InputLabel>
+        <InputLabel id="demo-simple-select-label" >Chart Duration</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={duration}
           label="Duration"
           onChange={handleChange}
+          MenuProps={{
+            style: {
+               maxHeight: "auto"
+                }
+            }}
         >
             {
                 Duration.map((item) => {
