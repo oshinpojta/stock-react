@@ -26,7 +26,7 @@ function NavBar() {
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
-    const titleFontSize = window.innerWidth*0.003 + "rem";
+    const titleFontSize = "1.8rem";
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
