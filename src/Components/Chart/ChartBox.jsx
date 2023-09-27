@@ -44,6 +44,7 @@ const ChartBox = (props) => {
 
     const chartWidth = window.innerWidth*0.79;
     const chartHeight = window.innerHeight*0.35;
+    const chartMarginLeft = window.innerHeight < 700 ? "24%" : "16%"; 
     const [chartData, setChartData] = useState(chartDataObj)
 
     useEffect(()=>{
@@ -74,7 +75,7 @@ const ChartBox = (props) => {
 
 
   return (
-    <div style={{ width:chartWidth, height:chartHeight, marginLeft:"24%", marginTop:"6rem"}}>
+    <div style={{ width:chartWidth, height:chartHeight, marginLeft:chartMarginLeft, marginTop:"6rem"}}>
       { chartStock && <Line redraw={false} options={{
             type : "bar",
             responsive:true,

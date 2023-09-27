@@ -6,7 +6,7 @@ import KeyboardDoubleArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardDou
 import KeyboardDoubleArrowRightOutlinedIcon from '@mui/icons-material/KeyboardDoubleArrowRightOutlined';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CancelIcon from '@mui/icons-material/Cancel';
-
+import VisibilityIcon from '@mui/icons-material/Visibility';
 
 const rootStyles={
   height:"110vh",
@@ -19,15 +19,14 @@ const rootStyles={
     width:"150px"
   }
 }
+
 const arrowIconStyles = { color:"black", float:"right", margin:"10", width:"100%", cursor:"pointer" };
-const menuIconStyles = { fontSize:"1.6rem", marginLeft:"1.5rem" }
+const menuIconStyles = { fontSize:"1.4rem", marginLeft:"2.5rem" }
 const menuItemsStyles = { 
     display: 'flex',
-    alignItems: 'center',
-    flexWrap: 'wrap',
-    zIndex:"2",
-    //boxShadow:"2px 3px lightblue inset" 
-    overflow:"scroll"
+    alignItems: 'left',
+    flexWrap: 'nowrap',
+    fontSize:"1.2rem",
 } 
 
 
@@ -48,13 +47,12 @@ const SideBar = () => {
     },[])
 
   return (
-    <Sidebar width='270px' collapsedWidth='60px' collapsed={toggleBar} rootStyles={rootStyles} >
+    <Sidebar component={"div"} width='270px' collapsedWidth='60px' collapsed={toggleBar} rootStyles={rootStyles} >
         <button onClick={toggleBarState}>
             { toggleBar ? <KeyboardDoubleArrowRightOutlinedIcon style={arrowIconStyles}/> : <KeyboardDoubleArrowLeftOutlinedIcon style={arrowIconStyles}/> }
         </button>
 
     <Menu menuItemStyles={{
-      overflow:"scroll",
       button: {
         // the active class will be added automatically by react router
         // so we can use it to style the active menu item
@@ -65,19 +63,19 @@ const SideBar = () => {
         color:"black"
       },
     }}>
-        <SubMenu defaultOpen={true} label="All Stocks" >
+        <SubMenu style={{  fontSize:"1.2rem" }} defaultOpen={true} label="All Stocks" >
         { stocks.map((stock) => {
-            return <div key={stock.id}><MenuItem style={menuItemsStyles} key={stock.id+"stocks"}> <span>{stock.name}</span> { stock.is_subscribed ? <CancelIcon style={{...menuIconStyles, color:"red"}} onClick={() => { subscribeStock(stock, stock.is_subscribed) }} /> : <AddCircleOutlineIcon style={{...menuIconStyles, color:"blue"}} onClick={() => { subscribeStock(stock, stock.is_subscribed) }} /> } </MenuItem></div>
+            return <div key={stock.id}><MenuItem style={menuItemsStyles} key={stock.id+"stocks"}> <span style={{ display:"inline-block" }}>{stock.name}</span> <span>{ stock.is_subscribed ? <CancelIcon style={{...menuIconStyles, color:"red"}} onClick={() => { subscribeStock(stock, stock.is_subscribed) }} /> : <AddCircleOutlineIcon style={{...menuIconStyles, color:"blue"}} onClick={() => { subscribeStock(stock, stock.is_subscribed) }} /> }</span> </MenuItem></div>
         }) }
         </SubMenu>
-        <SubMenu defaultOpen={true} label="Subscribed Stocks" >
+        <SubMenu style={{  fontSize:"1.2rem" }} defaultOpen={true} label="Subscribed Stocks" >
         { stocks.filter((stock)=> stock.is_subscribed ).map((stock) => {
-            return <div key={stock.id} onClick={() => { setChartStock(stock.id) }}><MenuItem style={menuItemsStyles}  key={stock.id+"subStocks"}> {stock.name} <p style={{ display:"inline", marginLeft:"0.5rem", color: stock.orders.slice(-1)[0].value > stock.startPrice ? "green" : "red"}}>{stock.orders.slice(-1)[0].value > stock.startPrice ? "+" : "-"}{Math.round((stock.orders.slice(-1)[0].value/stock.startPrice)*1000)/1000}%</p></MenuItem></div>
+            return <div key={stock.id} onClick={() => { setChartStock(stock.id) }}><MenuItem style={menuItemsStyles}  key={stock.id+"subStocks"}> {stock.name} <p style={{ display:"inline", marginLeft:"0.5rem", color: stock.orders.slice(-1)[0].value > stock.startPrice ? "green" : "red"}}>{stock.orders.slice(-1)[0].value > stock.startPrice ? "+" : "-"}{Math.round((stock.orders.slice(-1)[0].value/stock.startPrice)*1000)/1000}%</p> <VisibilityIcon style={{ ...menuIconStyles, color:"gray" }} /></MenuItem></div>
         }) }
         </SubMenu>
-        <a key={"node-repo"} href='https://github.com/oshinpojta/stock-react' target="_blank" rel='noreferrer' style={{ textDecoration:"none" }}><MenuItem> React-Repo Github </MenuItem></a>
-        <a key={"react-repo"} href='https://github.com/oshinpojta/stock-node' target="_blank" rel='noreferrer' style={{ textDecoration:"none" }}><MenuItem> Node-Repo Github </MenuItem></a>
-        <MenuItem style={{ backgroundColor:"red", color:"white", marginTop:"4rem" }} onClick={() => setLogout(true)}> Logout </MenuItem>
+      <MenuItem style={{  fontSize:"1.2rem" }}>  <a key={"node-repo"} href='https://github.com/oshinpojta/stock-react' target="_blank" rel='noreferrer' style={{ textDecoration:"none", color:"black" }}> React-Repo Github </a> </MenuItem>
+      <MenuItem style={{  fontSize:"1.2rem" }}> <a key={"react-repo"} href='https://github.com/oshinpojta/stock-node' target="_blank" rel='noreferrer' style={{ textDecoration:"none", color:"black" }}>Node-Repo Github </a> </MenuItem>
+        <MenuItem style={{ backgroundColor:"red", color:"white", marginTop:"4rem", fontSize:"1.2rem" }} onClick={() => setLogout(true)}> Logout </MenuItem>
     </Menu>
     </Sidebar>
   )

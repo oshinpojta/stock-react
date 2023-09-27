@@ -12,10 +12,11 @@ export default function Lists(props) {
     const { stocks } = props;
     const [ orderList, setOrderList ] = React.useState([]);
 
+    const marginLeft = window.innerHeight < 700 ? "22%" : "20%"; 
     const boxStyles = { 
       width: '100%', 
       maxWidth: "460", 
-      marginLeft:"22%",
+      marginLeft:marginLeft,
       marginTop:"10%", 
       bgcolor: 'background.paper', 
       color:"black", 

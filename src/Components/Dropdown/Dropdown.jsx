@@ -39,6 +39,8 @@ export default function Dropdown(props) {
   const state = React.useContext(Context);
   const {duration, setDuration, toggleBar} = state;
 
+  const marginLeft = window.innerHeight < 700 ? "24%" : "40%"; 
+
   const handleChange = (event) => {
     setDuration(event.target.value);
   };
@@ -51,7 +53,7 @@ export default function Dropdown(props) {
         height:"20px",
         minHeight: "10",
         maxHeight: "20", 
-        marginLeft:"40%",
+        marginLeft:marginLeft,
         marginTop:"2rem",
         visibility: window.innerWidth>700 ? "visible" : !toggleBar ? "hidden" : "visible" }}>
       <FormControl fullWidth>

@@ -156,7 +156,7 @@ function NavBar() {
           { user && <h3 style={{ marginRight:"1rem" }}>{user.name}</h3>}
           <Box sx={{ flexGrow: 0 }}>
            { user && <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, boxShadow:"0px 0px 4px 4px #d5f2f5" }}>
                 <Avatar alt="Profile Pic" src={ user && user.picture ? user.picture : ""} /> 
               </IconButton>
             </Tooltip> }
