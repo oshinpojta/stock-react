@@ -13,7 +13,6 @@ const rootStyles={
   backgroundColor:"#fafafa",
   position:"fixed", 
   top:"68px",
-  overflow:"scroll",
   boxShadow:"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
   "@media screen and (max-width: 600px)" : {
     width:"150px"
@@ -28,7 +27,6 @@ const menuItemsStyles = {
     flexWrap: 'nowrap',
     fontSize:"1.2rem",
 } 
-
 
 // https://github.com/azouaoui-med/react-pro-sidebar
 const SideBar = () => {
@@ -52,7 +50,7 @@ const SideBar = () => {
             { toggleBar ? <KeyboardDoubleArrowRightOutlinedIcon style={arrowIconStyles}/> : <KeyboardDoubleArrowLeftOutlinedIcon style={arrowIconStyles}/> }
         </button>
 
-    <Menu menuItemStyles={{
+    { <Menu menuItemStyles={{
       button: {
         // the active class will be added automatically by react router
         // so we can use it to style the active menu item
@@ -73,10 +71,10 @@ const SideBar = () => {
             return <div key={stock.id} onClick={() => { setChartStock(stock.id) }}><MenuItem style={menuItemsStyles}  key={stock.id+"subStocks"}> {stock.name} <p style={{ display:"inline", marginLeft:"0.5rem", color: stock.orders.slice(-1)[0].value > stock.startPrice ? "green" : "red"}}>{stock.orders.slice(-1)[0].value > stock.startPrice ? "+" : "-"}{Math.round((stock.orders.slice(-1)[0].value/stock.startPrice)*1000)/1000}%</p> <VisibilityIcon style={{ ...menuIconStyles, color:"gray" }} /></MenuItem></div>
         }) }
         </SubMenu>
-      <MenuItem style={{  fontSize:"1.2rem" }}>  <a key={"node-repo"} href='https://github.com/oshinpojta/stock-react' target="_blank" rel='noreferrer' style={{ textDecoration:"none", color:"black" }}> React-Repo Github </a> </MenuItem>
-      <MenuItem style={{  fontSize:"1.2rem" }}> <a key={"react-repo"} href='https://github.com/oshinpojta/stock-node' target="_blank" rel='noreferrer' style={{ textDecoration:"none", color:"black" }}>Node-Repo Github </a> </MenuItem>
+      <MenuItem component={"div"} style={{  fontSize:"1.2rem" }}>  <a key={"node-repo"} href='https://github.com/oshinpojta/stock-react' target="_blank" rel='noreferrer' style={{ textDecoration:"none", color:"black" }}> React-Repo Github </a> </MenuItem>
+      <MenuItem  component={"div"} style={{  fontSize:"1.2rem" }}> <a key={"react-repo"} href='https://github.com/oshinpojta/stock-node' target="_blank" rel='noreferrer' style={{ textDecoration:"none", color:"black" }}>Node-Repo Github </a> </MenuItem>
         <MenuItem style={{ backgroundColor:"red", color:"white", marginTop:"4rem", fontSize:"1.2rem" }} onClick={() => setLogout(true)}> Logout </MenuItem>
-    </Menu>
+    </Menu>}
     </Sidebar>
   )
 }
